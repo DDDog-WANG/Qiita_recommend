@@ -1,0 +1,1 @@
+mysql://{user}:{password}@{ipアドレス}:{port}/{db_name}

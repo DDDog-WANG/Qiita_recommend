@@ -1,0 +1,6 @@
+dbserver.txt
+data/*
+.DS_Store
+.ipynb_checkpoints
+#プログラム確認用
+!data/2018-07-15.csv

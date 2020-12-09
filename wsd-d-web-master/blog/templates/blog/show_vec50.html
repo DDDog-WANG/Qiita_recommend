@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/static/img/favicon.ico">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Pre-D</title>
+</head>
+
+<body class='bg-light'>
+
+    <body style="padding-top:4.5rem;">
+        <nav class="navbar navbar-light fixed-top" style="background-color: #55c500;">
+            <a class="navbar-brand" href="/" style="color: aliceblue;">Pre-D</a>
+
+        </nav>
+
+
+        <div class="container">
+            <div class="mx-auto">
+                <h2>Qiitaのいいね履歴から記事を推薦</h2>
+            </div>
+
+            {% block body %}
+            <form action="{% url 'vec50' %}" method="post">
+                {% csrf_token %}
+                <div class="row form-group">
+                    <div class="col-sm-10">
+                        <label>いいね履歴(url)</label>
+                        <input type="text" name="url" class="form-control" id="user_link" value="{{user_likes_url}}"
+                            placeholder="https://qiita.com/your_name/like" />
+                            <input type="text" id="inputText" placeholder="user_id">
+                    </div>
+                    <div class="col-sm-2 mx-sm-auto mt-3">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary mt-3" value="送信" name="button" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+
+                    <div class="h5">
+                        <label class="col-sm-2">推薦度</label>
+                        <div class="col-sm-10  form-inline">
+                            <input class="col-sm-2 form-control" type="number" name="p_dist" class="form-control" style="color: black;"
+                                value=300 /> * (1 - distance)
+                            + 1 / <input class="col-sm-2 form-control" type="number" name="p_like" class="form-control" style="color: black;"
+                                value=10 /> * (いいね数)
+                            - 1 / <input class="col-sm-2 form-control" type="number" name="p_date" class="form-control"style="color: black;"
+                                value=30 /> * (日)
+                        </div>
+                    </div>
+
+                </div>
+                {% endblock %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">推薦記事</div>
+
+                            <div class="card-body">
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+            </form>
+
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+            <script>
+                $(function() {
+                
+                    // テキストフォームを監視して入力があるたびに実行
+                    $('#inputText').on('input change', function() {
+                
+                        // テキストを取得
+                        var param = $(this).val();
+                
+                        // リンクを書き換え
+                        $('#user_link').val('https://qiita.com/'+param+'/like');
+                    });
+                
+                });
+                </script>
+
+    </body>
+
+</html>
